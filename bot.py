@@ -70,7 +70,7 @@ async def start_handler(message: Message):
     if is_subscribed:
         # Отправляем голосовое сообщение после успешной регистрации
         voice_file = FSInputFile("2025-07-07 15.05.54.ogg")
-        await message.answer_voice(voice=voice_file, caption="🎉 Yeah mon! Ты подписан на канал! Теперь можешь пользоваться Bombaclat GPT, bredrin! 🔥")
+        await message.answer_voice(voice=voice_file)
     else:
         await message.answer(
             f"🌴 Yo bredrin! Чтобы использовать Bombaclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
@@ -104,10 +104,10 @@ async def all_messages_handler(message: Message):
     is_subscribed = await check_subscription(user_id)
     
     if is_subscribed:
-        await message.answer("Bombaclatt, mon! 🔥")
+        await message.answer("Bomboclaat 🔥")
     else:
         await message.answer(
-            f"🌴 Yo bredrin! Чтобы использовать Bombaclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
+            f"🌴 Yo bredrin! Чтобы использовать Bomboclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
             "После подписки нажми кнопку 'Проверить подписку', mon!",
             reply_markup=get_subscription_keyboard()
         )
