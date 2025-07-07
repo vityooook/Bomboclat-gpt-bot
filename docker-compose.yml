@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  bombaclat-bot:
+    build: .
+    container_name: bombaclat-bot
+    restart: always
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - CHANNEL_ID=${CHANNEL_ID}
+    volumes:
+      - ./logs:/app/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('https://api.telegram.org')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s 
