@@ -69,8 +69,15 @@ async def start_handler(message: Message):
     
     if is_subscribed:
         # Отправляем голосовое сообщение после успешной регистрации
-        voice_file = FSInputFile("2025-07-07 15.05.54.ogg")
-        await message.answer_voice(voice=voice_file)
+        try:
+            voice_file = FSInputFile("2025-07-07 15.05.54.ogg")
+            await message.answer_voice(voice=voice_file)
+        except TelegramBadRequest as e:
+            if "VOICE_MESSAGES_FORBIDDEN" in str(e):
+                # Если голосовые сообщения запрещены, отправляем обычное сообщение
+                await message.answer("🎉 Yeah mon! Ты подписан на канал! Теперь можешь пользоваться Bombaclat GPT, bredrin! 🔥")
+            else:
+                raise e
     else:
         await message.answer(
             f"🌴 Yo bredrin! Чтобы использовать Bombaclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
@@ -88,8 +95,15 @@ async def check_subscription_callback(callback: CallbackQuery):
     
     if is_subscribed:
         # Отправляем голосовое сообщение после успешной проверки
-        voice_file = FSInputFile("2025-07-07 15.05.54.ogg")
-        await callback.message.answer_voice(voice=voice_file)
+        try:
+            voice_file = FSInputFile("2025-07-07 15.05.54.ogg")
+            await callback.message.answer_voice(voice=voice_file)
+        except TelegramBadRequest as e:
+            if "VOICE_MESSAGES_FORBIDDEN" in str(e):
+                # Если голосовые сообщения запрещены, отправляем обычное сообщение
+                await callback.message.answer("🎉 Yeah mon! Ты подписан на канал! Теперь можешь пользоваться Bombaclat GPT, bredrin! 🔥")
+            else:
+                raise e
         await callback.message.edit_text("✅ Проверка прошла успешно, mon!")
         await callback.answer("Проверка прошла успешно, mon!")
     else:
@@ -104,10 +118,10 @@ async def all_messages_handler(message: Message):
     is_subscribed = await check_subscription(user_id)
     
     if is_subscribed:
-        await message.answer("Bomboclaat 🔥")
+        await message.answer("Bombaclatt ")
     else:
         await message.answer(
-            f"🌴 Yo bredrin! Чтобы использовать Bomboclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
+            f"🌴 Yo bredrin! Чтобы использовать Bombaclat GPT, нужно подписаться на канал @ViktorBitcoin, ya feel me?\n\n"
             "После подписки нажми кнопку 'Проверить подписку', mon!",
             reply_markup=get_subscription_keyboard()
         )
